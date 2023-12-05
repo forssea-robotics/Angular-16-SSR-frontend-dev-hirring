@@ -1,6 +1,6 @@
 export interface IRadio {
   name: string,
-  frequency: number // unit Herz
+  frequency: number // unit Hertz
 }
 
 

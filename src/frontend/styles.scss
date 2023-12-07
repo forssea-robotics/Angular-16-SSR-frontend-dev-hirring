@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
+@use '@angular/material' as mat;
+
 /* --- CSS RESET --- */
 html,
 body,
@@ -184,3 +186,91 @@ body {
   background-color: #0B2031;
 }
 /* --- ENF OF GLOBAL STYLES --- */
+
+/* --- ANGULAR MATERIAL OVERRIDE --- */
+/* Color definitions */
+$mat-custom-primary: (
+  50: #E2E4E6,
+  100: #B6BCC1,
+  200: #859098,
+  300: #54636F,
+  400: #304150,
+  500: #0B2031,
+  600: #0A1C2C,
+  700: #081825,
+  800: #06131F,
+  900: #030B13,
+  A100: #54A0FF,
+  A200: #2184FF,
+  A400: #0069ED ,
+  A700: #005ED4,
+
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+$mat-custom-secondary: (
+  50: #E3EFF7,
+  100: #B8D7EA,
+  200: #89BDDD,
+  300: #59A2CF,
+  400: #368EC4,
+  500: #127ABA,
+  600: #1072B3,
+  700: #0D67AB,
+  800: #0A5DA3,
+  900: #054A94,
+  A100: #C0DBFF,
+  A200: #8DBEFF,
+  A400: #5AA0FF,
+  A700: #4192FF,
+
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: rgba(black, 0.87),
+    A200: rgba(black, 0.87),
+    A400: rgba(black, 0.87),
+    A700: rgba(black, 0.87),
+  )
+);
+
+
+
+$primary-colors: mat.define-palette($mat-custom-primary);
+$accent-colors: mat.define-palette($mat-custom-secondary, 500, A100);
+$warn: mat.define-palette(mat.$red-palette);
+
+$frs-custom-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $primary-colors,
+      accent: $accent-colors,
+      warn: $warn
+    ),
+  )
+);
+
+@include mat.all-component-themes($frs-custom-theme);

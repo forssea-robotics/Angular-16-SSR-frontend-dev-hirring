@@ -1,5 +1,5 @@
 {
-  "name": "angular-ssr-starter",
+  "name": "rocketx-hmi",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,10 +7,10 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "dev:ssr": "ng run angular-ssr-starter:serve-ssr",
-    "serve:ssr": "node dist/angular-ssr-starter/server/main.js",
-    "build:ssr": "ng build && ng run angular-ssr-starter:server",
-    "prerender": "ng run angular-ssr-starter:prerender",
+    "dev:ssr": "ng run rocketx-hmi:serve-ssr",
+    "serve:ssr": "node dist/rocketx-hmi/server/main.js",
+    "build:ssr": "ng build && ng run rocketx-hmi:server",
+    "prerender": "ng run rocketx-hmi:prerender",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix"
   },

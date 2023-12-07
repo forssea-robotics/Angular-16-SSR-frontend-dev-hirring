@@ -1,6 +1,9 @@
 <div class="Thruster-container" *ngIf="thruster !== undefined; else error">
   <h1>{{thruster.name}}</h1>
-  <mat-slide-toggle [(ngModel)]="thruster.powerOn" (change)="onThrusterChange()"></mat-slide-toggle>
+  <div>
+    <mat-slide-toggle [(ngModel)]="thruster.powerOn" (change)="onThrusterChange()"></mat-slide-toggle>
+    <span>Power state: {{thruster.powerOn ? 'On' : 'Off'}}</span>
+  </div>
   <p>Thrust: {{thruster.thrust}} MW</p>
   <p>Tank: {{thruster.tank.currentLevel / thruster.tank.capacity * 100}} %</p>
 </div>

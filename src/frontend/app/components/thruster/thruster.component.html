@@ -1,0 +1,12 @@
+<div class="Thruster-container" *ngIf="thruster !== undefined; else error">
+  <h1>{{thruster.name}}</h1>
+  <mat-slide-toggle [(ngModel)]="thruster.powerOn" (change)="onThrusterChange()"></mat-slide-toggle>
+  <p>Thrust: {{thruster.thrust}} MW</p>
+  <p>Tank: {{thruster.tank.currentLevel / thruster.tank.capacity * 100}} %</p>
+</div>
+
+<ng-template #error>
+  <div class="Thruster-container Error">
+    <h1>Thruster not found</h1>
+  </div>
+</ng-template>

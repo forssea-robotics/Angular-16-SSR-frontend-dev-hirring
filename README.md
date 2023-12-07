@@ -156,8 +156,8 @@ All the endpoints section have a base path:
 
 | URL                           | GET | POST | PUT | DELETE | WEBSOCKET |
 |-------------------------------|-----|------|-----|--------| --------- |
-| `/engine_list`                | Retrieve the current list of all engines state | NA | NA | NA | Retrieve the current list of all engines state |
-| `/engine_list/{id}`           | Retrieve the current state of one engine by its ID | NA | Update the state of one engine by its ID | NA | NA |
+| `/thruster_list`                | Retrieve the current list of all thrusters state | NA | NA | NA | Retrieve the current list of all thrusters state |
+| `/thruster_list/{id}`           | Retrieve the current state of one thruster by its ID | NA | Update the state of one thruster by its ID | NA | NA |
 
 ### Tools section
 

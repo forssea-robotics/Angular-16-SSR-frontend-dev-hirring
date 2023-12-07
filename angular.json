@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-ssr-starter": {
+    "rocketx-hmi": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -26,7 +26,7 @@
                 "replaceDuplicatePlugins": true
               }
             },
-            "outputPath": "dist/angular-ssr-starter/browser",
+            "outputPath": "dist/rocketx-hmi/browser",
             "index": "src/frontend/index.html",
             "main": "src/frontend/main.ts",
             "polyfills": [
@@ -73,10 +73,10 @@
           "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "angular-ssr-starter:build:production"
+              "browserTarget": "rocketx-hmi:build:production"
             },
             "development": {
-              "browserTarget": "angular-ssr-starter:build:development"
+              "browserTarget": "rocketx-hmi:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-ssr-starter:build"
+            "browserTarget": "rocketx-hmi:build"
           }
         },
         "test": {
@@ -108,7 +108,7 @@
         "server": {
           "builder": "@angular-builders/custom-webpack:server",
           "options": {
-            "outputPath": "dist/angular-ssr-starter/server",
+            "outputPath": "dist/rocketx-hmi/server",
             "main": "src/backend/server.ts",
             "tsConfig": "src/backend/tsconfig.server.json",
             "sourceMap": true,
@@ -141,12 +141,12 @@
           "builder": "@nguniversal/builders:ssr-dev-server",
           "configurations": {
             "development": {
-              "browserTarget": "angular-ssr-starter:build:development",
-              "serverTarget": "angular-ssr-starter:server:development"
+              "browserTarget": "rocketx-hmi:build:development",
+              "serverTarget": "rocketx-hmi:server:development"
             },
             "production": {
-              "browserTarget": "angular-ssr-starter:build:production",
-              "serverTarget": "angular-ssr-starter:server:production"
+              "browserTarget": "rocketx-hmi:build:production",
+              "serverTarget": "rocketx-hmi:server:production"
             }
           },
           "defaultConfiguration": "development"
@@ -160,17 +160,31 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-ssr-starter:build:production",
-              "serverTarget": "angular-ssr-starter:server:production"
+              "browserTarget": "rocketx-hmi:build:production",
+              "serverTarget": "rocketx-hmi:server:production"
             },
             "development": {
-              "browserTarget": "angular-ssr-starter:build:development",
-              "serverTarget": "angular-ssr-starter:server:development"
+              "browserTarget": "rocketx-hmi:build:development",
+              "serverTarget": "rocketx-hmi:server:development"
             }
           },
           "defaultConfiguration": "production"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
+  },
+  "cli": {
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

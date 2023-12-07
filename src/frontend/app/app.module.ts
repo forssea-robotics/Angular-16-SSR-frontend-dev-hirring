@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 
+// -- Modules
+import { SharedModule } from 'src/shared/shared.module';
+
+// -- Components
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -8,7 +11,7 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    BrowserModule
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

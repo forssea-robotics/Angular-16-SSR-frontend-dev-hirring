@@ -13,8 +13,7 @@ export class RadioComponent {
   // TODO: Exercice 2
 
   constructor(
-    @Inject(PLATFORM_ID) private _platformId: Object,
-    private _http: HttpClient
+    @Inject(PLATFORM_ID) private _platformId: Object
   ) {
     if(isPlatformServer(this._platformId)) return; // As we are using SSR, we don't want to run this code on the server
   }

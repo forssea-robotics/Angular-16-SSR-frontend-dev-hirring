@@ -12,7 +12,6 @@ export interface ITank {
   currentLevel: number // unit Litre
 }
 
-
 /**
  * Object representing a Thruster
  */

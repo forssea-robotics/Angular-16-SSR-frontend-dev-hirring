@@ -1,0 +1,14 @@
+<div>
+  <div>
+    <h1>Thrusters</h1>
+  </div>
+  <div *ngIf="thrusterList.length !== 0; else error">
+    <app-thruster *ngFor="let thruster of thrusterList" [thruster]="thruster"></app-thruster>
+  </div>
+</div>
+
+<ng-template #error>
+  <div>
+    <p>Thruster list not found</p>
+  </div>
+</ng-template>

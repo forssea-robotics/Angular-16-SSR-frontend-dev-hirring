@@ -3,11 +3,10 @@ export interface IRadio {
   frequency: number // unit Hertz
 }
 
-
 /**
  * Object representing a Radio
  */
-export class Thruster {
+export class Radio {
   name: string;
   frequency: number
 

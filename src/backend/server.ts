@@ -20,6 +20,7 @@ import { WebSocketServer } from 'ws';
 import { AppServerModule } from './main.server';
 
 // - Services
+import { APIRadioService } from './services/api-radio.service';
 import { APIThrusterService } from '../backend/services/api-thruster.service';
 
 
@@ -53,6 +54,7 @@ export function expressApp(): expressWs.Application {
   server.use(bodyParser.json());
 
   // -- Routers -- //
+  server.use(APIRadioService.Router);
   server.use(APIThrusterService.Router);
 
   // Serve static files from /browser

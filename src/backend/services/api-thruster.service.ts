@@ -162,7 +162,7 @@ export class APIThrusterService {
    * @param { String }  _propertyKey - The property key
    * @param { PropertyDescriptor } descriptor - The descriptor
    */
-  private static checkInstantiated(_target: any, _propertyKey: string, descriptor: PropertyDescriptor): void {
+  private static _checkInstantiated(_target: any, _propertyKey: string, descriptor: PropertyDescriptor): void {
     const originalMethod = descriptor.value;
 
     // Wrapping the original method
@@ -179,7 +179,7 @@ export class APIThrusterService {
    * @param { Response } res - The Response object from Express
    * @returns { Promise<Response<any, Record<string, any>>> } The Express object response
    */
-  @APIThrusterService.checkInstantiated
+  @APIThrusterService._checkInstantiated
   private static async _getThrusterListState(_req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
     const instance = APIThrusterService.Instance;
     const thrusterListState = instance.thrusterList;
@@ -193,7 +193,7 @@ export class APIThrusterService {
    * @param { Response } res - The Response object from Express
    * @returns { Promise<Response<any, Record<string, any>>> } The Express object response
    */
-  @APIThrusterService.checkInstantiated
+  @APIThrusterService._checkInstantiated
   private static async _updateOneThrusterStateById(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
     const instance = APIThrusterService.Instance;
     const thrusterState: Thruster = req.body;
@@ -215,6 +215,9 @@ export class APIThrusterService {
     if (thrusterState.id < 0 || thrusterState.id > instance._THRUSTER_ID.length) {
       return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'Only 6 thrusters are avalaible' });
     }
+    if (typeof(thrusterState.powerOn) !== 'boolean') {
+      return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'Thruster power on/off is not of correct type.' });
+    }
 
     const thruster = instance._fakeThrusterData.find((element: Thruster) => element.id === thrusterState.id);
     if(thruster !== undefined) {
@@ -222,7 +225,6 @@ export class APIThrusterService {
       instance._thrusterListSubject.next(instance._fakeThrusterData);
       return res.status(StatusCode.SuccessOK).send({ msg: 'Thruster power has been successfully updated.' });
     }
-
     return res.status(StatusCode.ServerErrorInternal).send({ msg: 'Thruster not found.' });
   }
 
@@ -232,6 +234,7 @@ export class APIThrusterService {
    * @param { Ws } ws - The Websocket object from Websocket
    * @returns { Promise<Response<any, Record<string, any>>> } The Express object response
    */
+  @APIThrusterService._checkInstantiated
   private static _thrusterStateWS(ws: ws): void {
     const instance = APIThrusterService.Instance;
     const subscription = instance.thrusterList$.subscribe((v: Thruster[]) => ws.send(JSON.stringify(v)));

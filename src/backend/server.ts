@@ -19,6 +19,8 @@ import { WebSocketServer } from 'ws';
 // - Modules
 import { AppServerModule } from './main.server';
 
+// - Services
+import { APIThrusterService } from '../backend/services/api-thruster.service';
 
 
 const webSocketServers: WebSocketServer[] = [];
@@ -42,7 +44,6 @@ export function expressApp(): expressWs.Application {
   server.engine('html', ngExpressEngine({
     bootstrap: AppServerModule
   }));
-
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
@@ -51,6 +52,8 @@ export function expressApp(): expressWs.Application {
   server.use(express.json());
   server.use(bodyParser.json());
 
+  // -- Routers -- //
+  server.use(APIThrusterService.Router);
 
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {

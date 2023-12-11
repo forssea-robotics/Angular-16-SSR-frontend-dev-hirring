@@ -34,9 +34,8 @@ export class ThrusterService {
     // Connecting to websocket in order to retrieve thruster list from the server
     webSocket<Thruster[]>({
       url: `ws://${location.host}${API_PATH_THRUSTER_LIST}`,
-    }).subscribe((thrusterListState: Thruster[]) => {
-      this._thrusterList.next(thrusterListState);
-    });
+    })
+    .subscribe((thrusterListState: Thruster[]) => this._thrusterList.next(thrusterListState));
   }
 
   /**
@@ -45,8 +44,7 @@ export class ThrusterService {
    */
   public updateThrusterState(thruster: Thruster): void {
     const path = `${API_PATH_THRUSTER_LIST}/${thruster.id}`;
-    const data = JSON.stringify(thruster);
-    this._http.put(path, data, { observe: 'response' }).subscribe();
+    this._http.put(path, thruster, { observe: 'response' }).subscribe();
   }
 
 }

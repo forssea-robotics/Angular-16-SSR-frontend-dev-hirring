@@ -26,10 +26,9 @@ export class ThrusterListContainerComponent {
 
     // Initializing the thruster list
     this.thrusterList = [];
+
     // Connecting to websocket in order to retrieve thruster list from the server
-    this._thrusterService.thrusterList$.subscribe((thrusterList: Thruster[]) => {
-      this.thrusterList = thrusterList;
-    });
+    this._thrusterService.thrusterList$.subscribe((thrusterList: Thruster[]) => this.thrusterList = thrusterList);
   }
 
 }

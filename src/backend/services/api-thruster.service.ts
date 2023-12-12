@@ -199,7 +199,6 @@ export class APIThrusterService {
     const instance = APIThrusterService.Instance;
     const thrusterState: Thruster = req.body;
     const paramId = parseInt(req.params['id'].toString(), 10);
-
     // Security checking
     if (paramId === undefined || paramId === null) {
       return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'You must set the thruster id.' });
@@ -225,7 +224,6 @@ export class APIThrusterService {
 
       if(thrusterState.id !== thruster.id ||
         thrusterState.name !== thruster.name ||
-        thrusterState.thrust !== thruster.thrust ||
         thrusterState.tank.capacity !== thruster.tank.capacity ||
         thrusterState.tank.currentLevel !== thruster.tank.currentLevel
       ) return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'You cannot modify the thruster id, name, thrust and tank capacity and current level.' });

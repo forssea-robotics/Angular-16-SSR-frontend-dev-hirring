@@ -50,12 +50,14 @@ export class APIRadioService {
     // Singleton: If the single instance has never been created, we need to create one with the current constructed one.
     if (APIRadioService._instance) {
       log('New connection : using APIRadioService singleton');
+      console.log('New connection : using APIRadioService singleton');
       return APIRadioService._instance;
     } else {
       log('Building APITRadioService');
+      console.log('Building APITRadioService');
       APIRadioService._instance = this;
-      this._radioSubject = new BehaviorSubject<Radio>(this._fakeRadioData);
     }
+    this._radioSubject = new BehaviorSubject<Radio>(this._fakeRadioData);
   }
 
 

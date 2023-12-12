@@ -113,13 +113,14 @@ export class APIThrusterService {
     // Singleton: If the single instance has never been created, we need to create one with the current constructed one.
     if (APIThrusterService._instance) {
       log('New connection : using APIThruserService singleton');
+      console.log('New connection : using APIThruserService singleton');
       return APIThrusterService._instance;
     } else {
       log('Building APIThrusterService');
+      console.log('Building APIThrusterService');
       APIThrusterService._instance = this;
-      this._thrusterListSubject = new BehaviorSubject<Thruster[]>(this._fakeThrusterData);
-      this._handleRandomThrustData();
     }
+    this._thrusterListSubject = new BehaviorSubject<Thruster[]>(this._fakeThrusterData);
   }
 
 
@@ -237,6 +238,7 @@ export class APIThrusterService {
   @APIThrusterService._checkInstantiated
   private static _thrusterStateWS(ws: ws): void {
     const instance = APIThrusterService.Instance;
+    instance._handleRandomThrustData();
     const subscription = instance.thrusterList$.subscribe((v: Thruster[]) => ws.send(JSON.stringify(v)));
     ws.on('close', () => subscription.unsubscribe());
   }

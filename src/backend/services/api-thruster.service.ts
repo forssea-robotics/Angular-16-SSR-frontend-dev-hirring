@@ -222,9 +222,20 @@ export class APIThrusterService {
 
     const thruster = instance._fakeThrusterData.find((element: Thruster) => element.id === thrusterState.id);
     if(thruster !== undefined) {
-      thruster.powerOn = thrusterState.powerOn;
-      instance._thrusterListSubject.next(instance._fakeThrusterData);
-      return res.status(StatusCode.SuccessOK).send({ msg: 'Thruster power has been successfully updated.' });
+
+      if(thrusterState.id !== thruster.id ||
+        thrusterState.name !== thruster.name ||
+        thrusterState.thrust !== thruster.thrust ||
+        thrusterState.tank.capacity !== thruster.tank.capacity ||
+        thrusterState.tank.currentLevel !== thruster.tank.currentLevel
+      ) return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'You cannot modify the thruster id, name, thrust and tank capacity and current level.' });
+
+      if(thrusterState.powerOn !== thruster.powerOn) {
+        thruster.powerOn = thrusterState.powerOn;
+        instance._thrusterListSubject.next(instance._fakeThrusterData);
+        return res.status(StatusCode.SuccessOK).send({ msg: 'Thruster power has been successfully updated.' });
+      }
+      return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'Thruster power has not change.' });
     }
     return res.status(StatusCode.ServerErrorInternal).send({ msg: 'Thruster not found.' });
   }

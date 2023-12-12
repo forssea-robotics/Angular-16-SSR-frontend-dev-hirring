@@ -111,6 +111,7 @@ Your mission is to develop a cutting-edge rocket that will revolutionize space t
 - Document the methods implemented.
 - Commit your changes regularly.
 - Use Angular Material library for toggles, progress bars and the slider (these modules are already available on the app).
+- Data must be updated in real time across multiple open browser windows (websocket network protocol).
 
 ### Exercice 1
 
@@ -156,11 +157,11 @@ All the endpoints section have a base path:
 
 | URL                           | GET | POST | PUT | DELETE | WEBSOCKET |
 |-------------------------------|-----|------|-----|--------| --------- |
-| `/thruster_list`                | Retrieve the current list of all thrusters state | NA | NA | NA | Retrieve the current list of all thrusters state |
-| `/thruster_list/{id}`           | Retrieve the current state of one thruster by its ID | NA | Update the state of one thruster by its ID | NA | NA |
+| `/thruster_list`              | Retrieve the current list of all thrusters state | NA | NA | NA | Retrieve the current list of all thrusters state |
+| `/thruster_list/:id`          | Retrieve the current state of one thruster by its ID | NA | Update the power on/off of one thruster by its ID | NA | NA |
 
 ### Tools section
 
 | URL                           | GET | POST | PUT | DELETE | WEBSOCKET |
 |-------------------------------|-----|------|-----|--------| --------- |
-| `/tools/radio`                | Retrieve the current state of the radio | NA | Update the state of the radio  | NA | Retrieve the current state of the radio |
+| `/tools/radio`                | Retrieve the current state of the radio | NA | Update the state (power on/off or frequency) of the radio  | NA | Retrieve the current state of the radio |

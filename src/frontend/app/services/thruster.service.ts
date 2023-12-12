@@ -9,7 +9,7 @@ import { webSocket } from 'rxjs/webSocket';
 // - Models
 import { Thruster } from 'src/shared/models/thruster';
 
-// - Constants
+// - API Path
 import { API_PATH_THRUSTER_LIST } from 'src/shared/constants/constants-path';
 
 @Injectable({

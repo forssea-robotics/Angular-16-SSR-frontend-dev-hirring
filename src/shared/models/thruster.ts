@@ -1,6 +1,6 @@
 export interface IThruster {
-  id: number,
-  name: string,
+  readonly id: number,
+  readonly name: string,
   powerOn: boolean,
   thrust: number, // unit Mega Water
   tank: ITank
@@ -8,17 +8,16 @@ export interface IThruster {
 
 
 export interface ITank {
-  capacity: number, // unit Litre
+  readonly capacity: number, // unit Litre
   currentLevel: number // unit Litre
 }
-
 
 /**
  * Object representing a Thruster
  */
 export class Thruster {
-  id: number;
-  name: string;
+  readonly id: number;
+  readonly name: string;
   powerOn: boolean;
   thrust: number;
   tank: ITank

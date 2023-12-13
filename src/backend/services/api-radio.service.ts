@@ -12,6 +12,9 @@ import { IRadio, Radio } from 'src/shared/models/radio';
 // - API Path
 import { API_PATH_RADIO } from 'src/shared/constants/constants-path';
 
+// - Utils
+import { isNumber } from 'src/shared/utils/number';
+
 // - Debug
 import * as debug from 'debug';
 const log = debug('app:api-radio-service');
@@ -25,7 +28,7 @@ export class APIRadioService {
 
   // Constants
   private readonly _RADIO_NAME = 'Radio';
-  private readonly _MIN_FREQUENCY = 88;
+  private readonly _MIN_FREQUENCY = 87.7;
   private readonly _MAX_FREQUENCY = 108;
 
   // Fake data by default
@@ -122,7 +125,7 @@ export class APIRadioService {
     const instance = APIRadioService.Instance;
     const radioState = instance.radio;
 
-    return res.status(StatusCode.SuccessOK).send({ radioState });
+    return res.status(StatusCode.SuccessOK).send(radioState);
   }
 
   /**
@@ -136,25 +139,28 @@ export class APIRadioService {
     const instance = APIRadioService.Instance;
     const radioState: IRadio = req.body;
 
-    // Security checking
+    // Security checking \\
+
+    // Body sended
     if(req.body.constructor === Object && Object.keys(req.body).length === 0) {
       return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'Body is empty.' });
     }
-    if (radioState.name === undefined || radioState.name === null || radioState.name !== instance._fakeRadioData.name) {
-      return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'The radio name is not correct.' });
-    }
-
     if(typeof(radioState.powerOn) !== 'boolean') {
       return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'Radio power on/off is not of correct type.' });
     }
-
-    if(typeof(radioState.frequency) !== 'number') {
+    if(!isNumber(radioState.frequency)) {
       return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'Radio frequency is not of correct type.' });
     }
     if(radioState.frequency < instance._MIN_FREQUENCY || radioState.frequency > instance._MAX_FREQUENCY) {
       return res.status(StatusCode.ClientErrorBadRequest).send({ msg: `Radio frequency is not in the correct range: [${instance._MIN_FREQUENCY} - ${instance._MAX_FREQUENCY}].` });
     }
 
+    // Behaviour checking \\
+    if(radioState.powerOn !== instance._fakeRadioData.powerOn && radioState.frequency !== instance._fakeRadioData.frequency) {
+      return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'You could not change power on/off and frequency at the same time.' });
+    }
+
+    // After passed security and behaviour checking, update the radio power on/off or frequency
     if(radioState.powerOn !== instance._fakeRadioData.powerOn) {
       instance._fakeRadioData.powerOn = radioState.powerOn;
       instance._radioSubject.next(instance._fakeRadioData);

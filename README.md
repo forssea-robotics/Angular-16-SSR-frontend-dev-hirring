@@ -145,7 +145,7 @@ Add a shortcut button to reset the radio frequency to 100 Hz. It's the default c
 The RocketX HMI API is organized into several sections:
 
 - Thrusters
-- Tools
+- Radio
 
 All the endpoints section have a base path:
 
@@ -162,8 +162,10 @@ All the endpoints section have a base path:
 
 > **_NOTE_** : Thruster PUT request body JSON example: { "powerOn": true }
 
-### Tools section
+### Radio section
 
 | URL                           | GET | POST | PUT | DELETE | WEBSOCKET |
 |-------------------------------|-----|------|-----|--------| --------- |
-| `/tools/radio`                | Retrieve the current state of the radio | NA | Update the state (power on/off or frequency) of the radio  | NA | Retrieve the current state of the radio |
+| `/radio`                      | Retrieve the current state of the radio | NA | Update the power on/off or frequency of the radio  | NA | Retrieve the current state of the radio |
+
+> **_NOTE_** : Radio PUT request body JSON example: { "powerOn": true, "frequency": 99.7 }

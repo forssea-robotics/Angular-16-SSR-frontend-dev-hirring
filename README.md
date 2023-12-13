@@ -157,8 +157,10 @@ All the endpoints section have a base path:
 
 | URL                           | GET | POST | PUT | DELETE | WEBSOCKET |
 |-------------------------------|-----|------|-----|--------| --------- |
-| `/thruster_list`              | Retrieve the current list of all thrusters state | NA | NA | NA | Retrieve the current list of all thrusters state |
-| `/thruster_list/:id`          | Retrieve the current state of one thruster by its ID | NA | Update the power on/off of one thruster by its ID | NA | NA |
+| `/thruster_list`              | Retrieve the current list of state of all thrusters | NA | NA | NA | Retrieve the current list of state of all thrusters |
+| `/thruster_list/:id`          | NA | NA | Update the power on/off of one thruster by its ID | NA | NA |
+
+> **_NOTE_** : Thruster PUT request body JSON example: { "powerOn": true }
 
 ### Tools section
 

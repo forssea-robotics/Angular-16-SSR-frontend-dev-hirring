@@ -39,12 +39,13 @@ export class ThrusterService {
   }
 
   /**
-   * Send a specific thruster state update by sending a PUT request to the server
-   * @param {Thruster} thruster - Thruster to update
+   * Update the power on/off of one specific thruster by its Id
+   * @param { Number } id - Id of the thruster to update
+   * @param { Boolean } powerOn - Power on/off status of the thruster to update
    */
-  public updateThrusterState(thruster: Thruster): void {
-    const path = `${API_PATH_THRUSTER_LIST}/${thruster.id}`;
-    this._http.put(path, thruster, { observe: 'response' }).subscribe();
+  public updateOneThrusterPowerById(id: number, powerOn: boolean): void {
+    const path = `${API_PATH_THRUSTER_LIST}/${id}`;
+    this._http.put(path, { powerOn }, { observe: 'response' }).subscribe();
   }
 
 }

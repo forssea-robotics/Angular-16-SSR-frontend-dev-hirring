@@ -185,7 +185,7 @@ export class APIThrusterService {
     const instance = APIThrusterService.Instance;
     const thrusterListState = instance.thrusterList;
 
-    return res.status(StatusCode.SuccessOK).send({ thrusterListState });
+    return res.status(StatusCode.SuccessOK).send(thrusterListState);
   }
 
   /**
@@ -197,43 +197,41 @@ export class APIThrusterService {
   @APIThrusterService._checkInstantiated
   private static async _updateOneThrusterStateById(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
     const instance = APIThrusterService.Instance;
-    const thrusterState: Thruster = req.body;
+    const newPowerOn: boolean = req.body.powerOn;
     const paramId = parseInt(req.params['id'].toString(), 10);
-    // Security checking
+
+
+    // Security checking \\
+
+    // Param Id requested
     if (paramId === undefined || paramId === null) {
       return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'You must set the thruster id.' });
     }
+    if (!isNumber(paramId)) {
+      return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'Thruster id must be an integer number.' });
+    }
+    if (paramId < 0 || paramId > instance._THRUSTER_ID.length) {
+      return res.status(StatusCode.ClientErrorBadRequest).send({ msg: `Only ${instance._THRUSTER_ID.length} thrusters are avalaible.` });
+    }
+
+    // Body sended
     if(req.body.constructor === Object && Object.keys(req.body).length === 0) {
       return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'Body is empty.' });
     }
-    if(paramId !== thrusterState.id) {
-      return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'Requested thruster id is not the same as the sended thruster.' });
-    }
-    if (isNumber(thrusterState.id) === false || parseInt(req.params['id'].toString(), 10) !== thrusterState.id) {
-      return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'Thruster id must be an integer number.' });
-    }
-    if (thrusterState.id < 0 || thrusterState.id > instance._THRUSTER_ID.length) {
-      return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'Only 6 thrusters are avalaible' });
-    }
-    if (typeof(thrusterState.powerOn) !== 'boolean') {
+    if (typeof(newPowerOn) !== 'boolean') {
       return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'Thruster power on/off is not of correct type.' });
     }
 
-    const thruster = instance._fakeThrusterData.find((element: Thruster) => element.id === thrusterState.id);
+
+    // After passed security checking, find the requested thruster
+    const thruster = instance._fakeThrusterData.find((element: Thruster) => element.id === paramId);
     if(thruster !== undefined) {
-
-      if(thrusterState.id !== thruster.id ||
-        thrusterState.name !== thruster.name ||
-        thrusterState.tank.capacity !== thruster.tank.capacity ||
-        thrusterState.tank.currentLevel !== thruster.tank.currentLevel
-      ) return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'You cannot modify the thruster id, name, thrust and tank capacity and current level.' });
-
-      if(thrusterState.powerOn !== thruster.powerOn) {
-        thruster.powerOn = thrusterState.powerOn;
+      if(thruster.powerOn !== newPowerOn) {
+        thruster.powerOn = newPowerOn;
         instance._thrusterListSubject.next(instance._fakeThrusterData);
-        return res.status(StatusCode.SuccessOK).send({ msg: 'Thruster power has been successfully updated.' });
+        return res.status(StatusCode.SuccessOK).send({ msg: `The thruster's power has been successfully updated.` });
       }
-      return res.status(StatusCode.ClientErrorBadRequest).send({ msg: 'Thruster power has not change.' });
+      return res.status(StatusCode.ClientErrorBadRequest).send({ msg: `The thruster's power has not changed.` });
     }
     return res.status(StatusCode.ServerErrorInternal).send({ msg: 'Thruster not found.' });
   }

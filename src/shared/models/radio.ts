@@ -1,5 +1,6 @@
 export interface IRadio {
-  name: string,
+  readonly name: string,
+  powerOn: boolean,
   frequency: number // unit Hertz
 }
 
@@ -7,11 +8,13 @@ export interface IRadio {
  * Object representing a Radio
  */
 export class Radio {
-  name: string;
+  readonly name: string;
+  powerOn: boolean;
   frequency: number
 
   constructor(data: IRadio) {
     this.name = data.name;
+    this.powerOn = data.powerOn;
     this.frequency = data.frequency;
   }
 

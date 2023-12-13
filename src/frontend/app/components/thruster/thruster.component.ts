@@ -29,7 +29,7 @@ export class ThrusterComponent {
   onThrusterChange(): void {
     if(this.thruster === undefined) return;
 
-    this._thrusterService.updateThrusterState(this.thruster);
+    this._thrusterService.updateOneThrusterPowerById(this.thruster.id, this.thruster.powerOn);
   }
 
 }

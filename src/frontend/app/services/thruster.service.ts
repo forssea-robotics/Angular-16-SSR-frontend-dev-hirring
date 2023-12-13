@@ -9,7 +9,7 @@ import { webSocket } from 'rxjs/webSocket';
 // - Models
 import { Thruster } from 'src/shared/models/thruster';
 
-// - Constants
+// - API Path
 import { API_PATH_THRUSTER_LIST } from 'src/shared/constants/constants-path';
 
 @Injectable({
@@ -34,19 +34,18 @@ export class ThrusterService {
     // Connecting to websocket in order to retrieve thruster list from the server
     webSocket<Thruster[]>({
       url: `ws://${location.host}${API_PATH_THRUSTER_LIST}`,
-    }).subscribe((thrusterListState: Thruster[]) => {
-      this._thrusterList.next(thrusterListState);
-    });
+    })
+    .subscribe((thrusterListState: Thruster[]) => this._thrusterList.next(thrusterListState));
   }
 
   /**
-   * Send a specific thruster state update by sending a PUT request to the server
-   * @param {Thruster} thruster - Thruster to update
+   * Update the power on/off of one specific thruster by its Id
+   * @param { Number } id - Id of the thruster to update
+   * @param { Boolean } powerOn - Power on/off status of the thruster to update
    */
-  public updateThrusterState(thruster: Thruster): void {
-    const path = `${API_PATH_THRUSTER_LIST}/${thruster.id}`;
-    const data = JSON.stringify(thruster);
-    this._http.put(path, data, { observe: 'response' }).subscribe();
+  public updateOneThrusterPowerById(id: number, powerOn: boolean): void {
+    const path = `${API_PATH_THRUSTER_LIST}/${id}`;
+    this._http.put(path, { powerOn }, { observe: 'response' }).subscribe();
   }
 
 }

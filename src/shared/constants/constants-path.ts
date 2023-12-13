@@ -13,4 +13,4 @@ const BASE_PATH = '/api/rocket';
 export const API_PATH_THRUSTER_LIST = `${BASE_PATH}/thruster_list`;
 
 // --- RADIO
-export const API_PATH_RADIO = `${BASE_PATH}/tools/radio`;
+export const API_PATH_RADIO = `${BASE_PATH}/radio`;

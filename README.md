@@ -132,8 +132,6 @@ We want to control :
 - The power on/off
 - The frequency
 
-> **_NOTE_** : You must implement an only one instance of the radio model in order to avoid radio interferences.
-
 ### Bonus
 
 You've thought of a nice to have feature on the HMI.

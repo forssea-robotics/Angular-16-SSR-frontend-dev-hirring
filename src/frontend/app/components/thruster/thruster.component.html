@@ -1,7 +1,7 @@
 <div *ngIf="thruster !== undefined; else error">
   <h2>{{thruster.name}}</h2>
   <div>
-    <mat-slide-toggle [(ngModel)]="thruster.powerOn" (change)="onThrusterChange()"></mat-slide-toggle>
+    <mat-slide-toggle [color]="'darker'" [(ngModel)]="thruster.powerOn" (change)="onThrusterChange()"></mat-slide-toggle>
     <span>Power: {{thruster.powerOn ? 'On' : 'Off'}}</span>
   </div>
   <p>Thrust: {{thruster.thrust}} MW</p>
